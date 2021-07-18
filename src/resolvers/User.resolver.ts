@@ -5,7 +5,7 @@ import { Query, Resolver } from "type-graphql";
 export class UserResolver {
 
     @Query(() => String)
-    ping(){
+    Ping(){
         return "Pong!"
     }
 
