@@ -1,0 +1,23 @@
+{
+   "type": "postgres",
+   "database": "chat-realtime",
+   "host": "localhost",
+   "port": "5432",
+   "username": "postgres",
+   "password": "0402197014",
+   "synchronize": false,
+   "entities": [
+      "./**/*.entity.js"
+   ],
+   "migrations": [
+      "dist/database/migration/**/*.js"
+   ],
+   "subscribers": [
+      "src/database/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/database/entity",
+      "migrationsDir": "src/database/migration",
+      "subscribersDir": "src/database/subscriber"
+   }
+}
