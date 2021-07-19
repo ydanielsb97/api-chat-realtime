@@ -5,7 +5,7 @@ import { Query, Resolver } from "type-graphql";
  export class RoomResolver {
 
     @Query(() => String)
-    ping(){
+    pingRoom(){
         return "Pong!"
     }
 

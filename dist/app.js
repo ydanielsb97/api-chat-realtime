@@ -37,11 +37,14 @@ const express_1 = __importStar(require("express"));
 const apollo_server_express_1 = require("apollo-server-express");
 const type_graphql_1 = require("type-graphql");
 const User_resolver_1 = require("./resolvers/User.resolver");
+const apollo_server_core_1 = require("apollo-server-core");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const Room_resolver_1 = require("./resolvers/Room.resolver");
 const Message_resolver_1 = require("./resolvers/Message.resolver");
+const cors_1 = __importDefault(require("cors"));
 const app = express_1.default();
 //config
+app.use(cors_1.default());
 app.use(express_1.json());
 app.use(express_1.urlencoded({ extended: false }));
 app.use(cookie_parser_1.default());
@@ -51,6 +54,7 @@ exports.serverStart = () => __awaiter(void 0, void 0, void 0, function* () {
             resolvers: [User_resolver_1.UserResolver, Room_resolver_1.RoomResolver, Message_resolver_1.MessageResolver],
         }),
         context: ({ req, res }) => ({ req, res }),
+        plugins: [apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground()]
     });
     yield server.start();
     server.applyMiddleware({ app: app, path: '/graphql' });

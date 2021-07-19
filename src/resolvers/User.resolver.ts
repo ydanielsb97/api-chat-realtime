@@ -37,7 +37,7 @@ export class UserResolver {
 
         if(!toAuth.authenticated) return toAuth;
 
-        res.cookie("token", toAuth.token,{ httpOnly: true, secure: true });
+        res.cookie("token", toAuth.token,{ maxAge: 5000, httpOnly: true });
 
         return toAuth;
     }

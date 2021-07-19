@@ -9,13 +9,16 @@ import { ContextI } from "./interfaces/context.interface";
 import { RoomResolver } from "./resolvers/Room.resolver";
 import { MessageResolver } from "./resolvers/Message.resolver";
 
+import cors from "cors"
+
 const app = Express();
 
 //config
 
+app.use(cookieParser())
+app.use(cors())
 app.use(json());
 app.use(urlencoded({extended: false}));
-app.use(cookieParser())
 
 export const serverStart = async () => {
 
@@ -23,8 +26,8 @@ export const serverStart = async () => {
         schema: await buildSchema({
             resolvers: [UserResolver, RoomResolver, MessageResolver],
         }),
-        context: ({ req, res }):ContextI => ({ req, res }),
-        // plugins:[ApolloServerPluginLandingPageGraphQLPlayground()]
+        context: ({ req, res }:ContextI) => ({ req, res }),
+        plugins:[ApolloServerPluginLandingPageGraphQLPlayground()]
     });
 
     await server.start()

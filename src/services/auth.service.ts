@@ -1,10 +1,10 @@
 import { getCustomRepository } from "typeorm";
 import { LoginUserDto } from "../dto/LoginUser.dto";
 import { UserRepository } from "../respository/User.repository";
-import tokenService from "./token.service";
-import _tokenService from "./token.service";
+import {tokenServiceInstance} from "./token.service";
+import {TokenService} from "./token.service";
 
-class AuthService extends tokenService{
+class AuthService extends TokenService{
 
     constructor(
         private readonly _userRepository: UserRepository = getCustomRepository(UserRepository)

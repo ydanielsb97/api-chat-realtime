@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoomResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 let RoomResolver = class RoomResolver {
-    ping() {
+    pingRoom() {
         return "Pong!";
     }
 };
@@ -21,7 +21,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], RoomResolver.prototype, "ping", null);
+], RoomResolver.prototype, "pingRoom", null);
 RoomResolver = __decorate([
     type_graphql_1.Resolver()
 ], RoomResolver);

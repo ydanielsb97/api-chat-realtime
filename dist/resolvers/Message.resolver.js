@@ -11,12 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageResolver = void 0;
 const type_graphql_1 = require("type-graphql");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
 let MessageResolver = class MessageResolver {
     Ping() {
         return "Pong!";
     }
 };
 __decorate([
+    type_graphql_1.UseMiddleware(auth_middleware_1.isAuthenticated),
     type_graphql_1.Query(() => String),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),

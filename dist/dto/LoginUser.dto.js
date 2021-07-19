@@ -30,14 +30,10 @@ let resLoginUser = class resLoginUser {
 __decorate([
     type_graphql_1.Field(() => String),
     __metadata("design:type", Boolean)
-], resLoginUser.prototype, "created", void 0);
+], resLoginUser.prototype, "authenticated", void 0);
 __decorate([
     type_graphql_1.Field(() => String),
-    __metadata("design:type", String)
-], resLoginUser.prototype, "error", void 0);
-__decorate([
-    type_graphql_1.Field(() => String),
-    __metadata("design:type", String)
+    __metadata("design:type", Object)
 ], resLoginUser.prototype, "token", void 0);
 resLoginUser = __decorate([
     type_graphql_1.ObjectType()
