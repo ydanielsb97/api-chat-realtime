@@ -1,7 +1,5 @@
 import { createConnection } from "typeorm";
 
-const connection = async () => {
+export const connection = async () => {
     return await createConnection();
 }
-
-export default connection;

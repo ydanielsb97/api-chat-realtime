@@ -8,16 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
-const database_1 = __importDefault(require("./database"));
+const database_1 = require("./database");
 const app_1 = require("./app");
 const constants_1 = require("./config/constants");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield database_1.default();
+    yield database_1.connection();
     console.log("Database connected");
     const app = yield app_1.serverStart();
     app.listen(constants_1.PORT, () => {

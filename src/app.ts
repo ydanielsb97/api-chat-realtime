@@ -5,6 +5,9 @@ import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/User.resolver";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import cookieParser from "cookie-parser";
+import { ContextI } from "./interfaces/context.interface";
+import { RoomResolver } from "./resolvers/Room.resolver";
+import { MessageResolver } from "./resolvers/Message.resolver";
 
 const app = Express();
 
@@ -18,9 +21,9 @@ export const serverStart = async () => {
 
     const server = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [UserResolver],
+            resolvers: [UserResolver, RoomResolver, MessageResolver],
         }),
-        context: ({ req, res }) => ({ req, res }),
+        context: ({ req, res }):ContextI => ({ req, res }),
         // plugins:[ApolloServerPluginLandingPageGraphQLPlayground()]
     });
 

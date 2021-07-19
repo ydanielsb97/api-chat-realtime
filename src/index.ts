@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import connection from "./database";
+import {connection} from "./database";
 import {serverStart} from "./app";
 import { PORT } from "./config/constants";
 

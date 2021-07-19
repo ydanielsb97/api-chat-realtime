@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.connection = void 0;
 const typeorm_1 = require("typeorm");
-const connection = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.connection = () => __awaiter(void 0, void 0, void 0, function* () {
     return yield typeorm_1.createConnection();
 });
-exports.default = connection;
