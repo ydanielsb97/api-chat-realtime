@@ -32,7 +32,7 @@ export class RoomRepository extends Repository<Room> {
     }
 
     public async findAll(){
-        const rooms = await this.find({select: ['name', 'description']});
+        return await this.find({select: ['name', 'description']});
     }
 
     public async findUsersByRoom (roomId: number) {

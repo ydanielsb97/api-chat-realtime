@@ -17,8 +17,6 @@ export class UserRepository extends Repository<User> {
         
         const newUser = this.create(createUserDto);
 
-        const userCreated = await this.save(newUser);
-
-        return {created: true, userCreated }
+        return await this.save(newUser);
     }
 }

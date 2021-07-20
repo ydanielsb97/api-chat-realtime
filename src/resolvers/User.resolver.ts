@@ -19,15 +19,19 @@ export class UserResolver {
         this._authService = new AuthService()
     }
 
-    @Mutation(() => String)
-    Ping(){
-        return "Pong!"
+    @Query(() => [User])
+    async getAllUsers(){
+         return await this._userRepository.find();
     }
 
-    @Mutation(() => resLoginUser)
-    async register(@Args() user: CreateUserDto){
+    @Mutation(() => Boolean)
+    async register(@Args() user: CreateUserDto, @Ctx() context: ContextI){
         console.log(user)
-       return await this._userRepository.creation(user);
+       const newUser = await this._userRepository.creation(user);
+
+        context.res.json(newUser)
+
+       return true;
     }
 
     @Mutation(() => resLoginUser)
