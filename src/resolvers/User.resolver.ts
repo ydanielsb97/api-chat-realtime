@@ -31,14 +31,15 @@ export class UserResolver {
     }
 
     @Mutation(() => resLoginUser)
-    async login(@Args() data: LoginUserDto, @Ctx() {res}: ContextI){
+    async login(@Args() data: LoginUserDto, @Ctx() context: ContextI){
 
         const toAuth = await this._authService.toAutenticate(data);
 
         if(!toAuth.authenticated) return toAuth;
 
-        res.cookie("token", toAuth.token,{ maxAge: 5000, httpOnly: true });
-
+     
+        context.res.cookie("token", toAuth.token, {maxAge: 5000, httpOnly: true});
+   
         return toAuth;
     }
 

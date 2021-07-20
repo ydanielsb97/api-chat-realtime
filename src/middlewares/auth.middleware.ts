@@ -15,6 +15,6 @@ export const isAuthenticated: MiddlewareFn<ContextI> = async ({ context }, next)
 
     context.res.locals.userId = token_decoded.userId;
 
-    return next();
+    next();
 
 }

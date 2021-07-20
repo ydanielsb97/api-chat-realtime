@@ -14,11 +14,14 @@ import cors from "cors"
 const app = Express();
 
 //config
-
+app.use(cors({
+    origin: "http://localhost:4000",
+    credentials: false,
+  }))
 app.use(cookieParser())
-app.use(cors())
+
 app.use(json());
-app.use(urlencoded({extended: false}));
+app.use(urlencoded({extended: true}));
 
 export const serverStart = async () => {
 
@@ -26,7 +29,7 @@ export const serverStart = async () => {
         schema: await buildSchema({
             resolvers: [UserResolver, RoomResolver, MessageResolver],
         }),
-        context: ({ req, res }:ContextI) => ({ req, res }),
+        context: ({ req, res }):ContextI => ({ req, res }),
         plugins:[ApolloServerPluginLandingPageGraphQLPlayground()]
     });
 
