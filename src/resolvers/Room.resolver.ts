@@ -1,8 +1,9 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
 import { getCustomRepository } from "typeorm";
 import { Message } from "../database/entity/Message.entity";
 import { Room } from "../database/entity/Room.entity";
 import { ContextI } from "../interfaces/context.interface";
+import { isAuthenticated } from "../middlewares/auth.middleware";
 import { RoomRepository } from "../respository/Room.respoitory";
 
 
@@ -18,11 +19,13 @@ import { RoomRepository } from "../respository/Room.respoitory";
 
 
     @Query(() => String)
+    @UseMiddleware(isAuthenticated)
     pingRoom(){
         return "Pong!"
     }
 
     @Mutation(() => Boolean)
+    @UseMiddleware(isAuthenticated)
     async createRoom (@Arg('name') name: string, @Arg('description') description: string, @Ctx() context: ContextI){
 
         const res = await this._roomRepository.newRoom({name, description});
@@ -38,11 +41,13 @@ import { RoomRepository } from "../respository/Room.respoitory";
     }
 
     @Query(() => [Room])
+    @UseMiddleware(isAuthenticated)
     async findAllRooms (){
         return await this._roomRepository.findAll();
     }
 
     @Query(() => [Message])
+    @UseMiddleware(isAuthenticated)
     async findMessagesByRoomId(@Arg('roomId') roomId: number, @Ctx() { res }: ContextI){
         const messages = await this._roomRepository.findMessagesByRoom(roomId);
 

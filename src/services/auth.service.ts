@@ -18,17 +18,29 @@ class AuthService extends TokenService{
             where: {
                 userName: loginUserDto.userName
             }
-        })
+        });
+
+
         
-        if(!userExists) return {authenticated: false, token: null}
+        if(!userExists) return {data: null}
 
         const passValid = await userExists.comparePassword(loginUserDto.password)
 
-        if(!passValid) return {authenticated: false, token: null}
+        if(!passValid) return {data: null}
 
         const token = this.generate(userExists.id);
 
-        return {authenticated: true, token}
+        return {
+            data: {
+                token,
+                userData: {
+                    firstName: userExists.firstName,
+                    lastName: userExists.lastName,
+                    userName: userExists.userName,
+                    uuid: userExists.uuid
+                }
+            }
+        }
     }
 }
 

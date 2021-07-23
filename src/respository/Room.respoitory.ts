@@ -5,7 +5,7 @@ import { CreateRoomDto } from "../dto/CreateRoom.dto";
 @EntityRepository(Room)
 export class RoomRepository extends Repository<Room> {
 
-    public async newRoom(createRoomDto: CreateRoomDto){
+    async newRoom(createRoomDto: CreateRoomDto){
         const validName = await this.findOne({
             where: {
                 name: createRoomDto.name
@@ -21,7 +21,7 @@ export class RoomRepository extends Repository<Room> {
         return { created: true, room }
     }
 
-    public async findWithRelations (roomId: number) {
+    async findWithRelations (roomId: number) {
         const room = await this.findOne(roomId, {
             relations: ['users', 'messages']
         })
@@ -31,8 +31,8 @@ export class RoomRepository extends Repository<Room> {
         return room;
     }
 
-    public async findAll(){
-        return await this.find({select: ['name', 'description']});
+    async findAll(){
+        return await this.find({select: ['name', 'description', 'id']});
     }
 
     public async findUsersByRoom (roomId: number) {
@@ -45,7 +45,7 @@ export class RoomRepository extends Repository<Room> {
         return room?.users;
     }
 
-    public async findMessagesByRoom (roomId: number) {
+    async findMessagesByRoom (roomId: number) {
         const room = await this.findOne(roomId, {
             relations: ['messages']
         })

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resLoginUser = exports.LoginUserDto = void 0;
 const type_graphql_1 = require("type-graphql");
+const context_interface_1 = require("../interfaces/context.interface");
 let LoginUserDto = class LoginUserDto {
 };
 __decorate([
@@ -28,13 +29,9 @@ exports.LoginUserDto = LoginUserDto;
 let resLoginUser = class resLoginUser {
 };
 __decorate([
-    type_graphql_1.Field(() => String),
-    __metadata("design:type", Boolean)
-], resLoginUser.prototype, "authenticated", void 0);
-__decorate([
-    type_graphql_1.Field(() => String),
+    type_graphql_1.Field(() => context_interface_1.ResLoginI),
     __metadata("design:type", Object)
-], resLoginUser.prototype, "token", void 0);
+], resLoginUser.prototype, "data", void 0);
 resLoginUser = __decorate([
     type_graphql_1.ObjectType()
 ], resLoginUser);

@@ -7,10 +7,10 @@
    "password": "0402197014",
    "synchronize": false,
    "entities": [
-      "./**/*.entity.ts"
+      "dist/database/entity/*.entity.js"
    ],
    "migrations": [
-      "dist/database/migration/**/*.js"
+      "dist/database/migration/*.js"
    ],
    "subscribers": [
       "src/database/subscriber/**/*.ts"

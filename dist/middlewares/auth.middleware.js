@@ -13,12 +13,10 @@ exports.isAuthenticated = void 0;
 const token_service_1 = require("../services/token.service");
 exports.isAuthenticated = ({ context }, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = context.req.cookies["token"];
-    console.log(token);
     if (!token)
         return context.res.json({ isAuthenticated: false });
     const token_decoded = token_service_1.tokenServiceInstance.verify(token);
     if (typeof token_decoded == "string")
         return context.res.json({ isAuthenticated: false });
-    context.res.locals.userId = token_decoded.userId;
     return next();
 });

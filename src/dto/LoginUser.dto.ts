@@ -1,4 +1,5 @@
 import { ArgsType, Field, ObjectType } from "type-graphql";
+import { ResLoginI } from "../interfaces/context.interface";
 
 @ArgsType()
 export class LoginUserDto{
@@ -13,10 +14,7 @@ export class LoginUserDto{
 @ObjectType()
 export class resLoginUser {
 
-    @Field(() => String)
-    authenticated!: boolean;
-
-    @Field(() => String)
-    token!: string | null;
+    @Field(() => ResLoginI)
+    data!: ResLoginI | null;
 }
 

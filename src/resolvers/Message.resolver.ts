@@ -19,14 +19,15 @@ import { MessageRepository } from "../respository/Message.respository";
 
 
 
-    @UseMiddleware(isAuthenticated)
     @Query(() => String)
+    @UseMiddleware(isAuthenticated)
     Ping(){
     
         return "Pong!"
     }
 
     @Mutation(() => Message)
+    @UseMiddleware(isAuthenticated)
     async createMessage (@Args() message: CreateMessageDto, @Ctx() {res}: ContextI){
         
         return await this._messageRepository.newMessage(message)

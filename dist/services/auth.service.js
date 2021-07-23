@@ -25,12 +25,22 @@ class AuthService extends token_service_1.TokenService {
                 }
             });
             if (!userExists)
-                return { authenticated: false, token: null };
+                return { data: null };
             const passValid = yield userExists.comparePassword(loginUserDto.password);
             if (!passValid)
-                return { authenticated: false, token: null };
+                return { data: null };
             const token = this.generate(userExists.id);
-            return { authenticated: true, token };
+            return {
+                data: {
+                    token,
+                    userData: {
+                        firstName: userExists.firstName,
+                        lastName: userExists.lastName,
+                        userName: userExists.userName,
+                        uuid: userExists.uuid
+                    }
+                }
+            };
         });
     }
 }

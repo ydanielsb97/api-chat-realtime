@@ -12,14 +12,13 @@ import { MessageResolver } from "./resolvers/Message.resolver";
 import cors from "cors"
 
 const app = Express();
+app.use(cookieParser())
 
 //config
 app.use(cors({
     origin: "http://localhost:4000",
     credentials: false,
   }))
-app.use(cookieParser())
-
 app.use(json());
 app.use(urlencoded({extended: true}));
 

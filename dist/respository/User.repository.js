@@ -29,8 +29,24 @@ let UserRepository = class UserRepository extends typeorm_1.Repository {
             if (userExists)
                 return { created: false, error: "User already exists" };
             const newUser = this.create(createUserDto);
-            const userCreated = yield this.save(newUser);
-            return { created: true, userCreated };
+            return yield this.save(newUser);
+        });
+    }
+    UsertoRoom(uuid, roomId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield this.findOne({
+                where: {
+                    uuid
+                }
+            });
+            if (!user)
+                return false;
+            const room = yield this.findOne(roomId);
+            if (!room)
+                return false;
+            user.room = room;
+            yield this.save(user);
+            return true;
         });
     }
 };

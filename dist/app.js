@@ -43,11 +43,14 @@ const Room_resolver_1 = require("./resolvers/Room.resolver");
 const Message_resolver_1 = require("./resolvers/Message.resolver");
 const cors_1 = __importDefault(require("cors"));
 const app = express_1.default();
-//config
-app.use(cors_1.default());
-app.use(express_1.json());
-app.use(express_1.urlencoded({ extended: false }));
 app.use(cookie_parser_1.default());
+//config
+app.use(cors_1.default({
+    origin: "http://localhost:4000",
+    credentials: false,
+}));
+app.use(express_1.json());
+app.use(express_1.urlencoded({ extended: true }));
 exports.serverStart = () => __awaiter(void 0, void 0, void 0, function* () {
     const server = new apollo_server_express_1.ApolloServer({
         schema: yield type_graphql_1.buildSchema({

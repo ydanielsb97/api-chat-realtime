@@ -27,8 +27,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
+const User_entity_1 = require("../database/entity/User.entity");
 const CreateUser_dto_1 = require("../dto/CreateUser.dto");
 const LoginUser_dto_1 = require("../dto/LoginUser.dto");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
 const User_repository_1 = require("../respository/User.repository");
 const auth_service_1 = __importDefault(require("../services/auth.service"));
 let UserResolver = class UserResolver {
@@ -38,36 +40,46 @@ let UserResolver = class UserResolver {
         this._userRepository = typeorm_1.getCustomRepository(User_repository_1.UserRepository);
         this._authService = new auth_service_1.default();
     }
-    Ping() {
-        return "Pong!";
-    }
-    register(user) {
+    getAllUsers() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(user);
-            return yield this._userRepository.creation(user);
+            return yield this._userRepository.find();
         });
     }
-    login(data, { res }) {
+    register(user, context) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(user);
+            const newUser = yield this._userRepository.creation(user);
+            context.res.json(newUser);
+            return true;
+        });
+    }
+    login(data, context) {
         return __awaiter(this, void 0, void 0, function* () {
             const toAuth = yield this._authService.toAutenticate(data);
-            if (!toAuth.authenticated)
-                return toAuth;
-            res.cookie("token", toAuth.token, { maxAge: 5000, httpOnly: true });
+            if (!toAuth.data)
+                return context.res.json(toAuth);
+            context.res.cookie("token", toAuth.data.token, { maxAge: 50000000, httpOnly: true });
             return toAuth;
+        });
+    }
+    userToRoom(uuid, roomId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this._userRepository.UsertoRoom(uuid, roomId);
         });
     }
 };
 __decorate([
-    type_graphql_1.Mutation(() => String),
+    type_graphql_1.Query(() => [User_entity_1.User]),
+    type_graphql_1.UseMiddleware(auth_middleware_1.isAuthenticated),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], UserResolver.prototype, "Ping", null);
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "getAllUsers", null);
 __decorate([
-    type_graphql_1.Mutation(() => LoginUser_dto_1.resLoginUser),
-    __param(0, type_graphql_1.Args()),
+    type_graphql_1.Mutation(() => Boolean),
+    __param(0, type_graphql_1.Args()), __param(1, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [CreateUser_dto_1.CreateUserDto]),
+    __metadata("design:paramtypes", [CreateUser_dto_1.CreateUserDto, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "register", null);
 __decorate([
@@ -77,6 +89,13 @@ __decorate([
     __metadata("design:paramtypes", [LoginUser_dto_1.LoginUserDto, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "login", null);
+__decorate([
+    type_graphql_1.Mutation(() => User_entity_1.User),
+    __param(0, type_graphql_1.Arg('uuid')), __param(1, type_graphql_1.Arg('roomId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "userToRoom", null);
 UserResolver = __decorate([
     type_graphql_1.Resolver(),
     __metadata("design:paramtypes", [User_repository_1.UserRepository,

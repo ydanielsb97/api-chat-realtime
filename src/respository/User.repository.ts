@@ -19,4 +19,24 @@ export class UserRepository extends Repository<User> {
 
         return await this.save(newUser);
     }
+
+    async UsertoRoom(uuid: string, roomId: number) {
+        const user = await this.findOne({
+            where: {
+                uuid
+            }
+        })
+
+        if(!user) return false;
+
+        const room = await this.findOne(roomId);
+
+        if(!room) return false;
+
+        user.room = room as any;
+
+        await this.save(user);
+
+        return true;
+    }
 }

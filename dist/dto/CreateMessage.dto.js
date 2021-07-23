@@ -9,33 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Room = void 0;
-const typeorm_1 = require("typeorm");
-const Message_entity_1 = require("./Message.entity");
-const User_entity_1 = require("./User.entity");
-let Room = class Room {
+exports.CreateMessageDto = void 0;
+const type_graphql_1 = require("type-graphql");
+let CreateMessageDto = class CreateMessageDto {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], CreateMessageDto.prototype, "text", void 0);
+__decorate([
+    type_graphql_1.Field(),
     __metadata("design:type", Number)
-], Room.prototype, "id", void 0);
+], CreateMessageDto.prototype, "roomId", void 0);
 __decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], Room.prototype, "name", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], Room.prototype, "description", void 0);
-__decorate([
-    typeorm_1.OneToMany(() => User_entity_1.User, user => user.room),
-    __metadata("design:type", Array)
-], Room.prototype, "users", void 0);
-__decorate([
-    typeorm_1.OneToMany(() => Message_entity_1.Message, message => message.room),
-    __metadata("design:type", Array)
-], Room.prototype, "messages", void 0);
-Room = __decorate([
-    typeorm_1.Entity('rooms')
-], Room);
-exports.Room = Room;
+    type_graphql_1.Field(),
+    __metadata("design:type", Number)
+], CreateMessageDto.prototype, "userId", void 0);
+CreateMessageDto = __decorate([
+    type_graphql_1.ArgsType()
+], CreateMessageDto);
+exports.CreateMessageDto = CreateMessageDto;

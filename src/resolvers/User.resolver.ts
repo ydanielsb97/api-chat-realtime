@@ -1,9 +1,10 @@
-import { Arg, Args, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
 import { getCustomRepository } from "typeorm";
 import { User } from "../database/entity/User.entity";
 import { CreateUserDto } from "../dto/CreateUser.dto";
 import { LoginUserDto, resLoginUser } from "../dto/LoginUser.dto";
 import { ContextI } from "../interfaces/context.interface";
+import { isAuthenticated } from "../middlewares/auth.middleware";
 import { UserRepository } from "../respository/User.repository";
 import AuthService from "../services/auth.service";
 
@@ -20,6 +21,7 @@ export class UserResolver {
     }
 
     @Query(() => [User])
+    @UseMiddleware(isAuthenticated)
     async getAllUsers(){
          return await this._userRepository.find();
     }
@@ -39,12 +41,16 @@ export class UserResolver {
 
         const toAuth = await this._authService.toAutenticate(data);
 
-        if(!toAuth.authenticated) return toAuth;
-
+        if(!toAuth.data) return context.res.json(toAuth);
      
-        context.res.cookie("token", toAuth.token, {maxAge: 5000, httpOnly: true});
+        context.res.cookie("token", toAuth.data.token, {maxAge: 50000000, httpOnly: true});
    
         return toAuth;
+    }
+
+    @Mutation(() => User)
+    async userToRoom(@Arg('uuid') uuid: string, @Arg('roomId') roomId: number){
+        return await this._userRepository.UsertoRoom(uuid, roomId);
     }
 
 }

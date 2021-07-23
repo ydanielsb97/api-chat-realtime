@@ -9,33 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Message = void 0;
-const typeorm_1 = require("typeorm");
-const Room_entity_1 = require("./Room.entity");
-const User_entity_1 = require("./User.entity");
-let Message = class Message {
+exports.UserDataI = void 0;
+const type_graphql_1 = require("type-graphql");
+let UserDataI = class UserDataI {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
-    __metadata("design:type", Number)
-], Message.prototype, "id", void 0);
-__decorate([
-    typeorm_1.Column(),
+    type_graphql_1.Field(() => String),
     __metadata("design:type", String)
-], Message.prototype, "text", void 0);
+], UserDataI.prototype, "userName", void 0);
 __decorate([
-    typeorm_1.CreateDateColumn(),
-    __metadata("design:type", Date)
-], Message.prototype, "createdDate", void 0);
+    type_graphql_1.Field(() => String),
+    __metadata("design:type", String)
+], UserDataI.prototype, "firstName", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => User_entity_1.User, user => user.messages),
-    __metadata("design:type", User_entity_1.User)
-], Message.prototype, "user", void 0);
+    type_graphql_1.Field(() => String),
+    __metadata("design:type", String)
+], UserDataI.prototype, "lastName", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => Room_entity_1.Room, room => room.messages),
-    __metadata("design:type", Room_entity_1.Room)
-], Message.prototype, "room", void 0);
-Message = __decorate([
-    typeorm_1.Entity('messages')
-], Message);
-exports.Message = Message;
+    type_graphql_1.Field(() => String),
+    __metadata("design:type", String)
+], UserDataI.prototype, "uuid", void 0);
+UserDataI = __decorate([
+    type_graphql_1.ObjectType()
+], UserDataI);
+exports.UserDataI = UserDataI;
