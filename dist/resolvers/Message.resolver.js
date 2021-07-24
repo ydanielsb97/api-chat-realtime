@@ -27,7 +27,7 @@ const typeorm_1 = require("typeorm");
 const Message_entity_1 = require("../database/entity/Message.entity");
 const CreateMessage_dto_1 = require("../dto/CreateMessage.dto");
 const auth_middleware_1 = require("../middlewares/auth.middleware");
-const Message_respository_1 = require("../respository/Message.respository");
+const Message_respository_1 = require("../database/respository/Message.respository");
 let MessageResolver = class MessageResolver {
     constructor(_messageRepository) {
         this._messageRepository = _messageRepository;

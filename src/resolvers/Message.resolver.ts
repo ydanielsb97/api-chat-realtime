@@ -4,7 +4,9 @@ import { Message } from "../database/entity/Message.entity";
 import { CreateMessageDto } from "../dto/CreateMessage.dto";
 import { ContextI } from "../interfaces/context.interface";
 import { isAuthenticated } from "../middlewares/auth.middleware";
-import { MessageRepository } from "../respository/Message.respository";
+import { MessageRepository } from "../database/respository/Message.respository";
+import { ResNewMessage } from "../dto/ResponseMessage.dto";
+import { Room } from "../database/entity/Room.entity";
 
 
 @Resolver()
@@ -26,11 +28,22 @@ import { MessageRepository } from "../respository/Message.respository";
         return "Pong!"
     }
 
-    @Mutation(() => Message)
+    @Mutation(() => ResNewMessage)
     @UseMiddleware(isAuthenticated)
     async createMessage (@Args() message: CreateMessageDto, @Ctx() {res}: ContextI){
         
         return await this._messageRepository.newMessage(message)
+    }
+
+    @Query(() => [Message])
+    async findMessagesWithRelations() {
+        return await this._messageRepository.findMessagesWithRelations();
+    }
+    @Query(() => [Room])
+    async findMessgesByRoomId(@Arg('roomId') roomId: number, @Ctx() {res}: ContextI){
+        const messages = await this._messageRepository.findMessagesByRoom(roomId);
+        
+        return messages
     }
 
  }

@@ -5,7 +5,7 @@ import { CreateUserDto } from "../dto/CreateUser.dto";
 import { LoginUserDto, resLoginUser } from "../dto/LoginUser.dto";
 import { ContextI } from "../interfaces/context.interface";
 import { isAuthenticated } from "../middlewares/auth.middleware";
-import { UserRepository } from "../respository/User.repository";
+import { UserRepository } from "../database/respository/User.repository";
 import AuthService from "../services/auth.service";
 
 
@@ -20,11 +20,18 @@ export class UserResolver {
         this._authService = new AuthService()
     }
 
-    @Query(() => [User])
     @UseMiddleware(isAuthenticated)
-    async getAllUsers(){
+    @Query(() => [User])
+    async findAllWithRooms(){
+         return await this._userRepository.findAllWithRooms();
+    }
+
+    @UseMiddleware(isAuthenticated)
+    @Query(() => [User])
+    async findAllUsers(){
          return await this._userRepository.find();
     }
+
 
     @Mutation(() => Boolean)
     async register(@Args() user: CreateUserDto, @Ctx() context: ContextI){
@@ -48,7 +55,7 @@ export class UserResolver {
         return toAuth;
     }
 
-    @Mutation(() => User)
+    @Mutation(() => Boolean)
     async userToRoom(@Arg('uuid') uuid: string, @Arg('roomId') roomId: number){
         return await this._userRepository.UsertoRoom(uuid, roomId);
     }

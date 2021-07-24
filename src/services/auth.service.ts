@@ -1,6 +1,6 @@
 import { getCustomRepository } from "typeorm";
 import { LoginUserDto } from "../dto/LoginUser.dto";
-import { UserRepository } from "../respository/User.repository";
+import { UserRepository } from "../database/respository/User.repository";
 import {tokenServiceInstance} from "./token.service";
 import {TokenService} from "./token.service";
 

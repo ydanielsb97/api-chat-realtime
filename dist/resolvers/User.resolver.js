@@ -31,7 +31,7 @@ const User_entity_1 = require("../database/entity/User.entity");
 const CreateUser_dto_1 = require("../dto/CreateUser.dto");
 const LoginUser_dto_1 = require("../dto/LoginUser.dto");
 const auth_middleware_1 = require("../middlewares/auth.middleware");
-const User_repository_1 = require("../respository/User.repository");
+const User_repository_1 = require("../database/respository/User.repository");
 const auth_service_1 = __importDefault(require("../services/auth.service"));
 let UserResolver = class UserResolver {
     constructor(_userRepository, _authService) {
@@ -42,7 +42,7 @@ let UserResolver = class UserResolver {
     }
     getAllUsers() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this._userRepository.find();
+            return yield this._userRepository.findAllWithRooms();
         });
     }
     register(user, context) {
@@ -69,8 +69,8 @@ let UserResolver = class UserResolver {
     }
 };
 __decorate([
-    type_graphql_1.Query(() => [User_entity_1.User]),
     type_graphql_1.UseMiddleware(auth_middleware_1.isAuthenticated),
+    type_graphql_1.Query(() => [User_entity_1.User]),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -90,7 +90,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "login", null);
 __decorate([
-    type_graphql_1.Mutation(() => User_entity_1.User),
+    type_graphql_1.Mutation(() => Boolean),
     __param(0, type_graphql_1.Arg('uuid')), __param(1, type_graphql_1.Arg('roomId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number]),

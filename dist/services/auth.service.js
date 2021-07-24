@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const User_repository_1 = require("../respository/User.repository");
+const User_repository_1 = require("../database/respository/User.repository");
 const token_service_1 = require("./token.service");
 class AuthService extends token_service_1.TokenService {
     constructor(_userRepository = typeorm_1.getCustomRepository(User_repository_1.UserRepository)) {

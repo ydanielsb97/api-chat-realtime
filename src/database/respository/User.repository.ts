@@ -1,11 +1,20 @@
-import { EntityRepository, Repository } from "typeorm";
-import { User } from "../database/entity/User.entity";
-import { CreateUserDto } from "../dto/CreateUser.dto";
+import { EntityRepository, IsNull, Not, Repository } from "typeorm";
+import { User } from "../entity/User.entity";
+import { CreateUserDto } from "../../dto/CreateUser.dto";
 
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
 
+    async findAllWithRooms(){
+        return await this.find({
+        
+            where:{
+                roomId: Not(IsNull())
+            },
+            relations: ['room']
+        })
+    }
     async creation(createUserDto: CreateUserDto) {
         const userExists = await this.findOne({
             where: {

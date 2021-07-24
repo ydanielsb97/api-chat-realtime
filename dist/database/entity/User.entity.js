@@ -43,7 +43,8 @@ __decorate([
 ], User.prototype, "id", void 0);
 __decorate([
     type_graphql_1.Field(),
-    typeorm_1.Generated('uuid'),
+    typeorm_1.Generated("uuid"),
+    typeorm_1.Column(),
     __metadata("design:type", String)
 ], User.prototype, "uuid", void 0);
 __decorate([
@@ -81,7 +82,11 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "messages", void 0);
 __decorate([
-    type_graphql_1.Field(() => Room_entity_1.Room),
+    typeorm_1.Column({ nullable: true }),
+    __metadata("design:type", Number)
+], User.prototype, "roomId", void 0);
+__decorate([
+    type_graphql_1.Field(() => [Room_entity_1.Room]),
     typeorm_1.ManyToOne(() => Room_entity_1.Room, room => room.users),
     __metadata("design:type", Room_entity_1.Room)
 ], User.prototype, "room", void 0);

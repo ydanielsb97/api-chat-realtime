@@ -7,7 +7,7 @@
    "password": "0402197014",
    "synchronize": false,
    "entities": [
-      "dist/database/entity/*.entity.js"
+      "./**/**/*.entity.ts"
    ],
    "migrations": [
       "dist/database/migration/*.js"

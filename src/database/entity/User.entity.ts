@@ -13,7 +13,8 @@ export class User {
     id!: number;
     
     @Field()
-    @Generated('uuid')
+    @Generated("uuid")
+    @Column()
     uuid!: string;
 
     @Field()
@@ -42,6 +43,9 @@ export class User {
     @Field(() => [Message])
     @OneToMany(() => Message, message => message.user )
     messages!: Message[];
+
+    @Column({nullable: true})
+    roomId?: number;
     
     @Field(() => Room)
     @ManyToOne(() => Room, room => room.users )

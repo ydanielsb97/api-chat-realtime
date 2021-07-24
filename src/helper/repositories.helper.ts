@@ -1,5 +1,5 @@
 import { getCustomRepository } from "typeorm"
-import { UserRepository } from "../respository/User.repository"
+import { UserRepository } from "../database/respository/User.repository"
 
 
 export const Account = () => {

@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from "typeorm";
-import { Room } from "../database/entity/Room.entity";
-import { CreateRoomDto } from "../dto/CreateRoom.dto";
+import { Room } from "../entity/Room.entity";
+import { CreateRoomDto } from "../../dto/CreateRoom.dto";
 
 @EntityRepository(Room)
 export class RoomRepository extends Repository<Room> {
@@ -32,7 +32,7 @@ export class RoomRepository extends Repository<Room> {
     }
 
     async findAll(){
-        return await this.find({select: ['name', 'description', 'id']});
+        return await this.find({select: ['name', 'description', 'id'], relations:['users', 'messages']});
     }
 
     public async findUsersByRoom (roomId: number) {

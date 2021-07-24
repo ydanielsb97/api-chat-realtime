@@ -1,4 +1,4 @@
-import { ArgsType, Field } from "type-graphql";
+import { ArgsType, Field, Int } from "type-graphql";
 
 @ArgsType()
 export class CreateMessageDto {
@@ -6,10 +6,10 @@ export class CreateMessageDto {
     @Field()
     text!: string;
 
-    @Field()
+    @Field(() => Int)
     roomId!: number;
 
     @Field()
-    userId!: number;
+    uuid!: string;
 
 }

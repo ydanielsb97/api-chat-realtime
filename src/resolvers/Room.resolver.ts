@@ -4,7 +4,7 @@ import { Message } from "../database/entity/Message.entity";
 import { Room } from "../database/entity/Room.entity";
 import { ContextI } from "../interfaces/context.interface";
 import { isAuthenticated } from "../middlewares/auth.middleware";
-import { RoomRepository } from "../respository/Room.respoitory";
+import { RoomRepository } from "../database/respository/Room.respoitory";
 
 
 @Resolver()
@@ -24,6 +24,11 @@ import { RoomRepository } from "../respository/Room.respoitory";
         return "Pong!"
     }
 
+    @Query(() => [Room])
+    @UseMiddleware(isAuthenticated)
+    async findAllRooms (){
+        return await this._roomRepository.findAll();
+    }
     @Mutation(() => Boolean)
     @UseMiddleware(isAuthenticated)
     async createRoom (@Arg('name') name: string, @Arg('description') description: string, @Ctx() context: ContextI){
@@ -40,11 +45,6 @@ import { RoomRepository } from "../respository/Room.respoitory";
         return true
     }
 
-    @Query(() => [Room])
-    @UseMiddleware(isAuthenticated)
-    async findAllRooms (){
-        return await this._roomRepository.findAll();
-    }
 
     @Query(() => [Message])
     @UseMiddleware(isAuthenticated)
