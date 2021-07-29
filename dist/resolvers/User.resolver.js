@@ -40,9 +40,14 @@ let UserResolver = class UserResolver {
         this._userRepository = typeorm_1.getCustomRepository(User_repository_1.UserRepository);
         this._authService = new auth_service_1.default();
     }
-    getAllUsers() {
+    findAllWithRooms() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this._userRepository.findAllWithRooms();
+        });
+    }
+    findAllUsers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this._userRepository.find();
         });
     }
     register(user, context) {
@@ -74,7 +79,14 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], UserResolver.prototype, "getAllUsers", null);
+], UserResolver.prototype, "findAllWithRooms", null);
+__decorate([
+    type_graphql_1.UseMiddleware(auth_middleware_1.isAuthenticated),
+    type_graphql_1.Query(() => [User_entity_1.User]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "findAllUsers", null);
 __decorate([
     type_graphql_1.Mutation(() => Boolean),
     __param(0, type_graphql_1.Args()), __param(1, type_graphql_1.Ctx()),

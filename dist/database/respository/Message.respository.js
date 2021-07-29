@@ -31,16 +31,27 @@ let MessageRepository = class MessageRepository extends typeorm_1.Repository {
         this._userRepository = typeorm_1.getCustomRepository(User_repository_1.UserRepository);
         this._roomRepository = typeorm_1.getCustomRepository(Room_respoitory_1.RoomRepository);
     }
-    newMessage({ text, userId, roomId }) {
+    newMessage({ text, uuid, roomId }) {
         return __awaiter(this, void 0, void 0, function* () {
             const room = yield this._roomRepository.findOne(roomId);
-            const user = yield this._userRepository.findOne(userId);
-            if (!room)
-                return { error: "Room not found" };
+            const user = yield this._userRepository.findOne({ where: { uuid } });
             if (!user)
-                return { error: "User not found" };
+                return { success: false, message: "User not found" };
+            if (!room)
+                return { success: false, message: "Room not found" };
             const model = this.create({ text, user, room });
-            return yield this.save(model);
+            const newMessage = yield this.save(model);
+            return { success: true, message: "Created", data: [newMessage] };
+        });
+    }
+    findMessagesWithRelations() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.find({ relations: ['user', 'room'] });
+        });
+    }
+    findMessagesByRoom(roomId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this._roomRepository.find({ where: { id: roomId }, relations: ['messages', 'messages.user'] });
         });
     }
 };

@@ -3,8 +3,8 @@ import { SECRET_KEY } from "../config/constants";
 
 export class TokenService {
 
-    public generate (userId: number) {
-        return jwt.sign({userId}, SECRET_KEY, {
+    public generate (uuid: string, userName: string) {
+        return jwt.sign({uuid, userName}, SECRET_KEY, {
             expiresIn: 15000
         });
     }

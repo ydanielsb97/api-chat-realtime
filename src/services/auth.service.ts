@@ -28,7 +28,7 @@ class AuthService extends TokenService{
 
         if(!passValid) return {data: null}
 
-        const token = this.generate(userExists.id);
+        const token = this.generate(userExists.uuid, userExists.userName);
 
         return {
             data: {

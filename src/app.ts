@@ -8,17 +8,23 @@ import cookieParser from "cookie-parser";
 import { ContextI } from "./interfaces/context.interface";
 import { RoomResolver } from "./resolvers/Room.resolver";
 import { MessageResolver } from "./resolvers/Message.resolver";
-
 import cors from "cors"
 
+import { Server, Socket } from "socket.io";
+
+
 const app = Express();
+
+
 app.use(cookieParser())
+
+
 
 //config
 app.use(cors({
-    origin: "http://localhost:4000",
-    credentials: false,
-  }))
+    origin: "http://localhost:3000",
+    credentials: true
+}))
 app.use(json());
 app.use(urlencoded({extended: true}));
 
@@ -38,4 +44,3 @@ export const serverStart = async () => {
 
     return app;
 }
-

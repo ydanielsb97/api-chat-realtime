@@ -27,7 +27,11 @@ import { RoomRepository } from "../database/respository/Room.respoitory";
     @Query(() => [Room])
     @UseMiddleware(isAuthenticated)
     async findAllRooms (){
-        return await this._roomRepository.findAll();
+        console.log("in FindAllRoom")
+        const room = await this._roomRepository.findNamesRooms();
+
+        // context.res.json({room});
+        return room 
     }
     @Mutation(() => Boolean)
     @UseMiddleware(isAuthenticated)

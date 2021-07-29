@@ -18,13 +18,13 @@ __decorate([
     __metadata("design:type", String)
 ], CreateMessageDto.prototype, "text", void 0);
 __decorate([
-    type_graphql_1.Field(),
+    type_graphql_1.Field(() => type_graphql_1.Int),
     __metadata("design:type", Number)
 ], CreateMessageDto.prototype, "roomId", void 0);
 __decorate([
     type_graphql_1.Field(),
-    __metadata("design:type", Number)
-], CreateMessageDto.prototype, "userId", void 0);
+    __metadata("design:type", String)
+], CreateMessageDto.prototype, "uuid", void 0);
 CreateMessageDto = __decorate([
     type_graphql_1.ArgsType()
 ], CreateMessageDto);

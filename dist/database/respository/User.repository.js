@@ -23,7 +23,7 @@ let UserRepository = class UserRepository extends typeorm_1.Repository {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.find({
                 where: {
-                    roomId: typeorm_1.Not(null)
+                    roomId: typeorm_1.Not(typeorm_1.IsNull())
                 },
                 relations: ['room']
             });

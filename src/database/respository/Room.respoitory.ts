@@ -35,6 +35,10 @@ export class RoomRepository extends Repository<Room> {
         return await this.find({select: ['name', 'description', 'id'], relations:['users', 'messages']});
     }
 
+    async findNamesRooms(){
+        return await this.find({select: ['name']});
+    }
+
     public async findUsersByRoom (roomId: number) {
         const room = await this.findOne(roomId, {
             relations: ['users']

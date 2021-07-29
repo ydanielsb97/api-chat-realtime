@@ -28,6 +28,8 @@ const Message_entity_1 = require("../database/entity/Message.entity");
 const CreateMessage_dto_1 = require("../dto/CreateMessage.dto");
 const auth_middleware_1 = require("../middlewares/auth.middleware");
 const Message_respository_1 = require("../database/respository/Message.respository");
+const ResponseMessage_dto_1 = require("../dto/ResponseMessage.dto");
+const Room_entity_1 = require("../database/entity/Room.entity");
 let MessageResolver = class MessageResolver {
     constructor(_messageRepository) {
         this._messageRepository = _messageRepository;
@@ -41,6 +43,17 @@ let MessageResolver = class MessageResolver {
             return yield this._messageRepository.newMessage(message);
         });
     }
+    findMessagesWithRelations() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this._messageRepository.findMessagesWithRelations();
+        });
+    }
+    findMessgesByRoomId(roomId, { res }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const messages = yield this._messageRepository.findMessagesByRoom(roomId);
+            return messages;
+        });
+    }
 };
 __decorate([
     type_graphql_1.Query(() => String),
@@ -50,13 +63,26 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MessageResolver.prototype, "Ping", null);
 __decorate([
-    type_graphql_1.Mutation(() => Message_entity_1.Message),
+    type_graphql_1.Mutation(() => ResponseMessage_dto_1.ResNewMessage),
     type_graphql_1.UseMiddleware(auth_middleware_1.isAuthenticated),
     __param(0, type_graphql_1.Args()), __param(1, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [CreateMessage_dto_1.CreateMessageDto, Object]),
     __metadata("design:returntype", Promise)
 ], MessageResolver.prototype, "createMessage", null);
+__decorate([
+    type_graphql_1.Query(() => [Message_entity_1.Message]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], MessageResolver.prototype, "findMessagesWithRelations", null);
+__decorate([
+    type_graphql_1.Query(() => [Room_entity_1.Room]),
+    __param(0, type_graphql_1.Arg('roomId')), __param(1, type_graphql_1.Ctx()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", Promise)
+], MessageResolver.prototype, "findMessgesByRoomId", null);
 MessageResolver = __decorate([
     type_graphql_1.Resolver(),
     __metadata("design:paramtypes", [Message_respository_1.MessageRepository])

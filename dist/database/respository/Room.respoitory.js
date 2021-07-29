@@ -45,7 +45,7 @@ let RoomRepository = class RoomRepository extends typeorm_1.Repository {
     }
     findAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.find({ select: ['name', 'description', 'id'], relations: ['users'] });
+            return yield this.find({ select: ['name', 'description', 'id'], relations: ['users', 'messages'] });
         });
     }
     findUsersByRoom(roomId) {

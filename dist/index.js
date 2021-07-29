@@ -17,8 +17,19 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield database_1.connection();
     console.log("Database connected");
     const app = yield app_1.serverStart();
-    app.listen(constants_1.PORT, () => {
+    const httpServer = require("http").createServer(app);
+    const io = require('socket.io')(httpServer);
+    io.on('connection', (socket) => {
+        console.log("new connection");
+    });
+    httpServer.listen(constants_1.PORT, () => {
         console.log("Server running on port", constants_1.PORT);
     });
+    return io;
 });
-main();
+const io = main();
+function default_1() {
+    return __awaiter(this, void 0, void 0, function* () { yield io; });
+}
+exports.default = default_1;
+;
