@@ -10,9 +10,6 @@ import { RoomResolver } from "./resolvers/Room.resolver";
 import { MessageResolver } from "./resolvers/Message.resolver";
 import cors from "cors"
 
-import { Server, Socket } from "socket.io";
-
-
 const app = Express();
 
 

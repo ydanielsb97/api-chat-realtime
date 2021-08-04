@@ -10,6 +10,7 @@
       "@types/node": "^8.10.66",
       "nodemon": "^2.0.12",
       "ts-node": "^10.1.0",
+      "ts-node-dev": "^1.1.8",
       "typescript": "^3.9.10"
    },
    "dependencies": {

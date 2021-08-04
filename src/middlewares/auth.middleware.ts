@@ -9,7 +9,6 @@ export const isAuthenticated: MiddlewareFn<ContextI> = async ({ context }, next:
 
     const token = headers?.split(" ", 2)[1];
 
-    console.log(token)
     if(!token) return context.res.json({isAuthenticated: false})
 
     const token_decoded = tokenServiceInstance.verify(token);
