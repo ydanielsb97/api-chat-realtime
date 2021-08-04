@@ -5,13 +5,16 @@ import { tokenServiceInstance } from "../services/token.service";
 
 export const isAuthenticated: MiddlewareFn<ContextI> = async ({ context }, next: NextFunction) => {
 
-    const token = context.req.cookies.token;
+    const headers = context.req.headers.authorization;
+
+    const token = headers?.split(" ", 2)[1];
+
     console.log(token)
-    // if(!token) return context.res.json({isAuthenticated: false})
+    if(!token) return context.res.json({isAuthenticated: false})
 
-    // const token_decoded = tokenServiceInstance.verify(token);
+    const token_decoded = tokenServiceInstance.verify(token);
 
-    // if(typeof token_decoded == "string") return context.res.json({isAuthenticated: false})
+    if(typeof token_decoded == "string") return context.res.json({isAuthenticated: false})
 
     return next();
 
