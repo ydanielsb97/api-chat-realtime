@@ -31,9 +31,10 @@ const main = async () => {
 
 
             io.to(newRoom).emit("user-join", "One user was joined")
+            io.emit("reset-messages", "");
         })
 
-        socket.on("send-new-message", (message: string, room: string) => {
+        socket.on("send-new-message", (message: any, room: string) => {
             console.log("New Message", message, room)
             io.to(room).emit("new-brodcast", message)
 
